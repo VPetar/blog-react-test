@@ -9,7 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: npm ci && npm run build
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+      - run: yarn install --frozen-lockfile && yarn build && yarn global add serve && serve -s build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
